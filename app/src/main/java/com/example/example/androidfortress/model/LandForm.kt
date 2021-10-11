@@ -1,4 +1,4 @@
-package com.example.example.androidfortress
+package com.example.example.androidfortress.model
 
 class LandForm(width: Int, height: Int) {
 
@@ -9,7 +9,7 @@ class LandForm(width: Int, height: Int) {
 
     fun setLand() {
         // 몇개의 꼭지점을 갖는 지형을 그릴지
-        val vertexNum = (8..10).random()
+        val vertexNum = (4..6).random()
 
 
         for (i in 0..vertexNum) {
@@ -17,17 +17,19 @@ class LandForm(width: Int, height: Int) {
             val x = (i + 1) * width / vertexNum
 
             // 왜 3ㅈ따리
-            val y = if (i % 3 == 0) {
+
+            val y = if (i % 2 == 0) {
                 ((height * 0.1).toInt()..(height * 0.3).toInt()).random()
             } else {
-                ((height * 0.6).toInt()..(height * 0.8).toInt()).random()
+                ((height * 0.6).toInt()..(height * 0.75).toInt()).random()
             }
+
 //            val y = ((height * 0.1).toInt()..(height * 0.8).toInt()).random()
 
             vertex.add(arrayListOf(x, y))
         }
 
-        var sortedVertex = vertex.sortedBy { it -> it[0] }
+        val sortedVertex = vertex.sortedBy { it -> it[0] }
 
 
 //        vertex.forEach{
