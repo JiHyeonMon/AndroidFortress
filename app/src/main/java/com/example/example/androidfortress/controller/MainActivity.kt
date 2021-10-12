@@ -53,36 +53,30 @@ class MainActivity : AppCompatActivity() {
         binding.btnDirectionUp5.setOnClickListener {
             game.basecamp.missile.changeAngle(5)
             binding.textAngle.text = game.basecamp.missile.angle.toString()
-            Toast.makeText(this, "${game.basecamp.missile.angle}", Toast.LENGTH_SHORT).show()
         }
         binding.btnDirectionUp10.setOnClickListener {
             game.basecamp.missile.changeAngle(10)
             binding.textAngle.text = game.basecamp.missile.angle.toString()
-            Toast.makeText(this, "${game.basecamp.missile.angle}", Toast.LENGTH_SHORT).show()
 
         }
         binding.btnDirectionDown5.setOnClickListener {
             game.basecamp.missile.changeAngle(-5)
             binding.textAngle.text = game.basecamp.missile.angle.toString()
-            Toast.makeText(this, "${game.basecamp.missile.angle}", Toast.LENGTH_SHORT).show()
 
         }
         binding.btnDirectionDown10.setOnClickListener {
             game.basecamp.missile.changeAngle(-10)
             binding.textAngle.text = game.basecamp.missile.angle.toString()
-            Toast.makeText(this, "${game.basecamp.missile.angle}", Toast.LENGTH_SHORT).show()
 
         }
         binding.btnPowerUp.setOnClickListener {
             game.basecamp.missile.changeSpeed(1)
             binding.textPower.text = game.basecamp.missile.v.toString()
-            Toast.makeText(this, "${game.basecamp.missile.v}", Toast.LENGTH_SHORT).show()
 
         }
         binding.btnPowerDown.setOnClickListener {
             game.basecamp.missile.changeSpeed(-1)
             binding.textPower.text = game.basecamp.missile.v.toString()
-            Toast.makeText(this, "${game.basecamp.missile.v}", Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -147,6 +141,7 @@ class MainActivity : AppCompatActivity() {
 
     //
     private fun updateUI() {
+        binding.textRemainBomb.text = game.missileNum.toString()
         binding.textAngle.text = game.basecamp.missile.angle.toString()
         binding.textPower.text = game.basecamp.missile.v.toString()
 
