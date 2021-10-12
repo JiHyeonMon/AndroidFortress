@@ -6,6 +6,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.example.androidfortress.view.CanvasView
 import com.example.example.androidfortress.model.LandForm
@@ -45,6 +46,45 @@ class MainActivity : AppCompatActivity() {
 
         initUI()
 
+        binding.btnFire.setOnClickListener {
+            game.missileNum -= 1
+            progress()
+        }
+        binding.btnDirectionUp5.setOnClickListener {
+            game.basecamp.missile.changeAngle(5)
+            binding.textAngle.text = game.basecamp.missile.angle.toString()
+            Toast.makeText(this, "${game.basecamp.missile.angle}", Toast.LENGTH_SHORT).show()
+        }
+        binding.btnDirectionUp10.setOnClickListener {
+            game.basecamp.missile.changeAngle(10)
+            binding.textAngle.text = game.basecamp.missile.angle.toString()
+            Toast.makeText(this, "${game.basecamp.missile.angle}", Toast.LENGTH_SHORT).show()
+
+        }
+        binding.btnDirectionDown5.setOnClickListener {
+            game.basecamp.missile.changeAngle(-5)
+            binding.textAngle.text = game.basecamp.missile.angle.toString()
+            Toast.makeText(this, "${game.basecamp.missile.angle}", Toast.LENGTH_SHORT).show()
+
+        }
+        binding.btnDirectionDown10.setOnClickListener {
+            game.basecamp.missile.changeAngle(-10)
+            binding.textAngle.text = game.basecamp.missile.angle.toString()
+            Toast.makeText(this, "${game.basecamp.missile.angle}", Toast.LENGTH_SHORT).show()
+
+        }
+        binding.btnPowerUp.setOnClickListener {
+            game.basecamp.missile.changeSpeed(1)
+            binding.textPower.text = game.basecamp.missile.v.toString()
+            Toast.makeText(this, "${game.basecamp.missile.v}", Toast.LENGTH_SHORT).show()
+
+        }
+        binding.btnPowerDown.setOnClickListener {
+            game.basecamp.missile.changeSpeed(-1)
+            binding.textPower.text = game.basecamp.missile.v.toString()
+            Toast.makeText(this, "${game.basecamp.missile.v}", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     //
@@ -60,7 +100,11 @@ class MainActivity : AppCompatActivity() {
 
 
         canvasView = CanvasView(this)
-        val layoutParam = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 2f)
+        val layoutParam = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            2f
+        )
         canvasView.layoutParams = layoutParam
         binding.layout.addView(canvasView, 0)
 
@@ -70,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         canvasView.setVertex(game.landForm.vertex)
         canvasView.setBasecamp(game.basecamp)
         canvasView.setEnemies(game.enemies)
+        canvasView.setMissile(game.basecamp.missile)
     }
 
     //
@@ -78,24 +123,35 @@ class MainActivity : AppCompatActivity() {
         runnable = Runnable {
             // TODO
 
-            // game.progress()
             // 게임 모델에서 데이터 변경
+            // gameState = FIRE 가 된다.
+            // 미사일 날아간다.
+            game.progress()
 
             // ViewUpdate
             updateUI()
 
             // check
             // 미사일이 적에게 닿았는지
+            if (game.gameState!=Game.GAME_STATE.FIRE) {
+                Toast.makeText(this, "한 발 끝 ", Toast.LENGTH_SHORT).show()
+                updateUI()
+                return@Runnable
+            }
 
             // 1초마다 check
-            handler.postDelayed(runnable, 1000)
+            handler.postDelayed(runnable, 50)
         }
         handler.post(runnable)
     }
 
     //
     private fun updateUI() {
+        binding.textAngle.text = game.basecamp.missile.angle.toString()
+        binding.textPower.text = game.basecamp.missile.v.toString()
 
+
+        canvasView.setMissile(game.basecamp.missile)
+        canvasView.invalidate()
     }
-
 }

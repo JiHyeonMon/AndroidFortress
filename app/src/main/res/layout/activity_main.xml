@@ -20,88 +20,140 @@
             android:id="@+id/textview1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
             android:text="남은 포탄의 수:"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/textview2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textview2"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_remain_bomb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:textSize="15sp"
             android:text="5"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/textview1"
             app:layout_constraintStart_toEndOf="@id/textview1"
-            app:layout_constraintTop_toTopOf="@+id/textview1"
-            app:layout_constraintBottom_toBottomOf="@id/textview1"/>
+            app:layout_constraintTop_toTopOf="@+id/textview1" />
 
         <TextView
             android:id="@+id/textview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="ANGLE: "
             android:textSize="15sp"
-            android:text="DIRECTION"
-            app:layout_constraintTop_toBottomOf="@id/textview1"
             app:layout_constraintBottom_toTopOf="@id/textview3"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview1" />
 
-        <Button
-            android:id="@+id/btn_direction_up"
+        <TextView
+            android:id="@+id/text_angle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="Up"
+            android:text="45"
             app:layout_constraintBottom_toBottomOf="@+id/textview2"
             app:layout_constraintStart_toEndOf="@id/textview2"
             app:layout_constraintTop_toTopOf="@+id/textview2" />
 
-        <Button
-            android:id="@+id/btn_direction_down"
+
+        <TextView
+            android:id="@+id/btn_direction_up_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Down"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_direction_up"
-            app:layout_constraintStart_toEndOf="@id/btn_direction_up"
-            app:layout_constraintTop_toTopOf="@+id/btn_direction_up" />
+            android:text="+ 5"
+            android:background="@color/white"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintStart_toStartOf="@id/textview2"
+            app:layout_constraintTop_toBottomOf="@+id/textview2" />
+
+        <TextView
+            android:id="@+id/btn_direction_up_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="+ 10"
+            android:background="@color/white"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintStart_toEndOf="@id/btn_direction_up_5"
+            app:layout_constraintTop_toBottomOf="@+id/textview2" />
+
+
+        <TextView
+            android:id="@+id/btn_direction_down_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="- 5"
+            android:background="@color/white"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_direction_up_10"
+            app:layout_constraintStart_toEndOf="@id/btn_direction_up_10"
+            app:layout_constraintTop_toTopOf="@+id/btn_direction_up_10" />
+
+        <TextView
+            android:id="@+id/btn_direction_down_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="- 10"
+            android:background="@color/white"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_direction_up_10"
+            app:layout_constraintStart_toEndOf="@id/btn_direction_down_5"
+            app:layout_constraintTop_toTopOf="@+id/btn_direction_up_10" />
 
         <TextView
             android:id="@+id/textview3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="POWER: "
             android:textSize="15sp"
-            android:text="POWER"
-            app:layout_constraintTop_toBottomOf="@id/textview2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview2" />
 
-        <Button
-            android:id="@+id/button2"
+        <TextView
+            android:id="@+id/text_power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Up"
-            app:layout_constraintBottom_toBottomOf="@+id/textview3"
+            android:layout_marginStart="30dp"
+            android:text="10"
+            app:layout_constraintStart_toEndOf="@id/textview3"
+            app:layout_constraintTop_toTopOf="@id/textview3"
+            app:layout_constraintBottom_toBottomOf="@id/textview3"/>
+
+        <TextView
+            android:id="@+id/btn_power_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ 1"
+            android:background="@color/white"
+            android:paddingHorizontal="10dp"
             app:layout_constraintStart_toEndOf="@+id/textview2"
-            app:layout_constraintStart_toStartOf="@+id/btn_direction_up"
-            app:layout_constraintTop_toTopOf="@+id/textview3" />
+            app:layout_constraintStart_toStartOf="@+id/textview3"
+            app:layout_constraintTop_toBottomOf="@+id/textview3" />
 
-        <Button
-            android:id="@+id/button"
+        <TextView
+            android:id="@+id/btn_power_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Down"
-            app:layout_constraintBottom_toBottomOf="@+id/button2"
-            app:layout_constraintStart_toEndOf="@+id/button2"
-            app:layout_constraintTop_toTopOf="@+id/button2" />
+            android:layout_marginStart="10dp"
+            android:text="- 1"
+            android:background="@color/white"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_power_up"
+            app:layout_constraintStart_toEndOf="@+id/btn_power_up"
+            app:layout_constraintTop_toTopOf="@+id/btn_power_up" />
 
         <Button
             android:id="@+id/btn_fire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FIRE"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
