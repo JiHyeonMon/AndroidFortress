@@ -2,8 +2,8 @@ package com.example.example.androidfortress.model
 
 object GameConfig {
 
-    const val SCREEN_WIDTH = 1080
-    const val SCREEN_HEIGHT = 0
+    var SCREEN_WIDTH = 1080F
+    var SCREEN_HEIGHT = 1794F
 
 
 }

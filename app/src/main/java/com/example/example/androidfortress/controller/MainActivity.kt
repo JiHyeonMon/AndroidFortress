@@ -2,6 +2,7 @@ package com.example.example.androidfortress.controller
 
 import android.graphics.Point
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.example.androidfortress.view.CanvasView
 import com.example.example.androidfortress.model.LandForm
 import com.example.example.androidfortress.databinding.ActivityMainBinding
+import com.example.example.androidfortress.model.Game
+import com.example.example.androidfortress.model.GameConfig
 import com.example.example.androidfortress.model.Tank
 
 
@@ -18,7 +21,17 @@ class MainActivity : AppCompatActivity() {
     private var width: Int = 0
     private var height: Int = 0
 
-    lateinit var binding: ActivityMainBinding
+    // 실행할 게임 객체
+    lateinit var game: Game
+
+    lateinit var canvasView: CanvasView
+
+    lateinit var handler: Handler
+    lateinit var runnable: Runnable
+
+    private lateinit var binding: ActivityMainBinding
+
+    //
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,49 +40,61 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        game = Game()
+        game.init()
+
+        initUI()
+
+    }
+
+    //
+    private fun initUI() {
         // 기기의 가로, 세로 길이 구하기
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        width = size.x
-        height = size.y
+//        val display = windowManager.defaultDisplay
+//        val size = Point()
+//        display.getSize(size)
+//        Log.e("screen", "${size.x} ${size.y}")
+//
+//        GameConfig.SCREEN_WIDTH = size.x.toFloat()
+//        GameConfig.SCREEN_HEIGHT = size.y.toFloat()
 
 
-        val canvasView = CanvasView(this)
+        canvasView = CanvasView(this)
         val layoutParam = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 2f)
         canvasView.layoutParams = layoutParam
         binding.layout.addView(canvasView, 0)
 
-
-
-        val landForm = LandForm(width, height)
-        landForm.setLand()
-        val v = landForm.vertex
-        v.forEach {
-            Log.e("vertex in Main", it.joinToString(" "))
+        game.landForm.vertex.forEach {
+            Log.e("vertex", it.joinToString(" "))
         }
+        canvasView.setVertex(game.landForm.vertex)
+        canvasView.setBasecamp(game.basecamp)
+        canvasView.setEnemies(game.enemies)
+    }
 
-        canvasView.setVertex(v)
+    //
+    private fun progress() {
+        handler = Handler()
+        runnable = Runnable {
+            // TODO
 
+            // game.progress()
+            // 게임 모델에서 데이터 변경
 
+            // ViewUpdate
+            updateUI()
 
-        Log.e("layout height", "$width $height ${height*0.8}")
+            // check
+            // 미사일이 적에게 닿았는지
 
-        val tank = Tank()
-        tank.setTank(v)
-        canvasView.setBasecamp(tank)
+            // 1초마다 check
+            handler.postDelayed(runnable, 1000)
+        }
+        handler.post(runnable)
+    }
 
-        val tank1 = Tank()
-        tank1.setTank(v)
-
-        val tank2 = Tank()
-        tank2.setTank(v)
-
-        val tank3 = Tank()
-        tank3.setTank(v)
-
-        val enemies = arrayListOf(tank1, tank2, tank3)
-        canvasView.setEnemies(enemies)
+    //
+    private fun updateUI() {
 
     }
 

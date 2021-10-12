@@ -1,19 +1,16 @@
 package com.example.example.androidfortress.model
 
-import kotlin.properties.Delegates
+open class Tank {
 
-class Tank {
+    open var x = ((GameConfig.SCREEN_WIDTH/2).toInt()..GameConfig.SCREEN_WIDTH.toInt()).random().toFloat()
+    var y = 0f
 
-    var x by Delegates.notNull<Int>()
-    var y by Delegates.notNull<Int>()
+    fun setTank(vertex: MutableList<ArrayList<Float>>) {
 
-    fun setTank(vertex: MutableList<ArrayList<Int>>) {
-        x = (0..GameConfig.SCREEN_WIDTH).random()
-
-        var x1 = 0
-        var x2 = 0
-        var y1 = 0
-        var y2 = 0
+        var x1 = 0f
+        var x2 = 0f
+        var y1 = 0f
+        var y2 = 0f
 
         for (i in vertex.indices) {
             if (vertex[i][0] > x) {
@@ -27,5 +24,6 @@ class Tank {
 
         // 두 점을 지나는 직선의 방정식
         y = (y2 - y1) / (x2 - x1) * (x - x1) + y1
+
     }
 }

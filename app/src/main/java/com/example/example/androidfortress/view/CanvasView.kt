@@ -8,14 +8,14 @@ import com.example.example.androidfortress.model.Tank
 
 class CanvasView(context: Context) : View(context) {
 
-    private val path = Path()
+    private val landformPath = Path()
     private val paint = Paint()
 
-    private var vertex: MutableList<ArrayList<Int>>? = null
+    private var vertex: MutableList<ArrayList<Float>>? = null
     private var basecamp: Tank? = null
     private var enemies: ArrayList<Tank>? = null
 
-    fun setVertex(vertex: MutableList<ArrayList<Int>>) {
+    fun setVertex(vertex: MutableList<ArrayList<Float>>) {
         this.vertex = vertex
     }
 
@@ -30,72 +30,50 @@ class CanvasView(context: Context) : View(context) {
     override fun onDraw(canvas: Canvas?) {
 
         //draw here...
-
         canvas!!.drawColor(Color.WHITE)
-
-        paint.strokeWidth = 5f
-        paint.color = Color.GREEN
-        paint.style = Paint.Style.STROKE
-
-        paint.pathEffect = CornerPathEffect(100F)
 
         //nothing to draw...
         if (this.vertex != null) {
-            path.reset()
-            path.lineTo(0F, height.toFloat())
+            paint.strokeWidth = 5f
+            paint.color = Color.GREEN
+            paint.style = Paint.Style.STROKE
+            landformPath.reset()
+//            path.lineTo(0F, height.toFloat())
+            paint.pathEffect = CornerPathEffect(100f)
 
-//
-//
             for (i in 0 until vertex!!.size - 1) {
 //            path.quadTo(vertex[i][0].toFloat(), vertex[i][1].toFloat(), vertex[i+1][0].toFloat(), vertex[i+1][1].toFloat())
-                path.lineTo(vertex!![i][0].toFloat(), vertex!![i][1].toFloat())
+                landformPath.lineTo(vertex!![i][0], vertex!![i][1])
             }
 
-            canvas.drawPath(path, paint)
+            canvas.drawPath(landformPath, paint)
 
             Log.e("second", "$width $height")
         }
 
+        // 기존에 경로 그릴때 라운드 넣었는데 이제 라운드 없이 네모 그리기 위해 0
+        paint.pathEffect = CornerPathEffect(0F)
+        // 이제 그릴 rectangle 꽉 채워 그리기 위해 paint style 값 변경
+        paint.style = Paint.Style.FILL_AND_STROKE
+
+
         if (this.basecamp != null) {
             paint.color = Color.BLUE
-            canvas.drawRect((basecamp!!.x-35).toFloat(), (basecamp!!.y-35).toFloat(),
-                (basecamp!!.x+35).toFloat(), (basecamp!!.y+35).toFloat(), paint)
+            canvas.drawRect((basecamp!!.x-20), (basecamp!!.y), (basecamp!!.x+20), (basecamp!!.y+40), paint)
         }
 
         if (this.enemies != null) {
             paint.color = Color.RED
             enemies!!.forEach {
-                canvas.drawRect((it!!.x-35).toFloat(), (it!!.y-35).toFloat(),
-                    (it!!.x+35).toFloat(), (it!!.y+35).toFloat(), paint)
+                canvas.drawRect((it.x-20), (it.y), (it.x+20), (it.y+40), paint)
+//                canvas.drawOval((it!!.x-5).toFloat(), (it!!.y).toFloat(),
+//                    (it!!.x+5).toFloat(), (it!!.y).toFloat(), paint)
+//                tankPath.moveTo(it.x1.toFloat(), it.y1.toFloat() )
+//                tankPath.lineTo(it.x.toFloat(), it.y.toFloat())
+//                canvas.drawPath(tankPath, paint)
             }
 
         }
 
-
-        // 직선 곡선을 패스로 정의한 후 출력
-//        path.reset()
-////        path.moveTo(10F, 110F) // 첫 좌표 지정
-//        path.quadTo(120F, 170F, 200F, 110F)
-//        path.quadTo(250F, 50F, 300F, 300F)
-//        path.quadTo(320F, 350F, 320F, 110F)
-//        path.quadTo(120F, 170F, 200F, 110F)
-
-
     }
 }
-
-//        // 곡선 패스 출력
-//        path.reset()
-//        path.moveTo(10F, 220F)
-//        path.cubicTo(80F, 150F, 150F, 220F, 220F, 180F)
-//        paint.strokeWidth = 2f
-//        paint.color = Color.BLACK
-//        canvas.drawPath(path, paint)
-//
-//        // 곡선 패스 위에 텍스트 출력
-//
-//        // 곡선 패스 위에 텍스트 출력
-//        paint.textSize = 20f
-//        paint.style = Paint.Style.FILL
-//        paint.isAntiAlias = true
-//        canvas.drawTextOnPath("Curved Text on Path.", path, 0F, 0F, paint)
