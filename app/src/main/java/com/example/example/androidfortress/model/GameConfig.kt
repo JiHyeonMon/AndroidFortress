@@ -10,4 +10,8 @@ object GameConfig {
     const val TANK_SIZE = 40
     const val MISSILE_SIZE = 20
 
+    const val MISSILE_GUIDE_RADIUS = 100
+
+    const val G = 10
+
 }

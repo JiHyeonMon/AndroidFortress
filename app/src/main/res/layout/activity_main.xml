@@ -69,18 +69,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textview2" />
 
         <TextView
-            android:id="@+id/btn_direction_up_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="+ 10"
-            android:background="@color/white"
-            android:paddingHorizontal="10dp"
-            app:layout_constraintStart_toEndOf="@id/btn_direction_up_5"
-            app:layout_constraintTop_toBottomOf="@+id/textview2" />
-
-
-        <TextView
             android:id="@+id/btn_direction_down_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,21 +76,9 @@
             android:text="- 5"
             android:background="@color/white"
             android:paddingHorizontal="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_direction_up_10"
-            app:layout_constraintStart_toEndOf="@id/btn_direction_up_10"
-            app:layout_constraintTop_toTopOf="@+id/btn_direction_up_10" />
-
-        <TextView
-            android:id="@+id/btn_direction_down_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="- 10"
-            android:background="@color/white"
-            android:paddingHorizontal="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_direction_up_10"
-            app:layout_constraintStart_toEndOf="@id/btn_direction_down_5"
-            app:layout_constraintTop_toTopOf="@+id/btn_direction_up_10" />
+            app:layout_constraintBottom_toBottomOf="@+id/btn_direction_up_5"
+            app:layout_constraintStart_toEndOf="@id/btn_direction_up_5"
+            app:layout_constraintTop_toTopOf="@+id/btn_direction_up_5" />
 
         <TextView
             android:id="@+id/textview3"

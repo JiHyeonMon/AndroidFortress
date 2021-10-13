@@ -11,7 +11,7 @@ class Game {
 
     var missileNum = GameConfig.MISSILE_NUMBER
 
-    lateinit var landForm: LandForm
+    lateinit var mountain: Mountain
     lateinit var basecamp: Basecamp
     lateinit var enemies: ArrayList<Tank>
 
@@ -19,28 +19,32 @@ class Game {
         gameState = GAME_STATE.READY
 
         // 지형 초기화
-        landForm = LandForm()
-        landForm.setLand()
+        mountain = Mountain()
+        mountain.setMountain()
 
         // 나의 tank - basecamp 초기화
         basecamp = Basecamp()
-        basecamp.setTank(landForm)
+        basecamp.setTank(mountain)
 
 
         // 적의 탱크 초기화
         val tank1 = Tank()
-        tank1.setTank(landForm)
+        tank1.setTank(mountain)
 
         val tank2 = Tank()
-        tank2.setTank(landForm)
+        tank2.setTank(mountain)
 
         val tank3 = Tank()
-        tank3.setTank(landForm)
+        tank3.setTank(mountain)
 
         enemies = arrayListOf(tank1, tank2, tank3)
 
         // 미사일 초기화
         basecamp.initMissile()
+
+        // ㄱㅏ이드 라인
+        basecamp.setGuide()
+
     }
 
 
@@ -61,6 +65,10 @@ class Game {
             failed()
         }
 
+        if (isOverScreen()) {
+            failed()
+        }
+
         if (isHitEnemy() != null) {
             val hitEnemy = isHitEnemy()
             hitEnemy!!.color = Color.BLACK
@@ -77,39 +85,48 @@ class Game {
     }
 
     private fun isHitMountain(): Boolean {
-        Log.e(
-            "fire",
-            "${basecamp.missile.x} ${basecamp.missile.y} ${landForm.isOnLandForm(basecamp.missile.x.toFloat())}"
-        )
 
-        if (basecamp.missile.y - GameConfig.MISSILE_SIZE > basecamp.y - GameConfig.TANK_SIZE &&
-            basecamp.missile.y + GameConfig.MISSILE_SIZE < basecamp.y + GameConfig.TANK_SIZE
-        ) {
-            Log.e("in tank", "in")
-            return false
-        }
-
-        // 두 점을 지나는 직선의 방정식
-        if (basecamp.missile.y.toInt() - GameConfig.MISSILE_SIZE <= landForm.isOnLandForm(basecamp.missile.x.toFloat()).toInt() &&
-            landForm.isOnLandForm(basecamp.missile.x.toFloat()).toInt() <= basecamp.missile.y.toInt() + GameConfig.MISSILE_SIZE
-        ) {
-            Log.e(
-                "hit Mountain",
-                "${basecamp.missile.x} ${basecamp.missile.y} ${landForm.isOnLandForm(basecamp.missile.x.toFloat())}"
-            )
+        if (mountain.isHitMountain(basecamp.missile.x.toFloat(), basecamp.missile.y.toFloat())) {
+            Log.e("hit", "hit the mountain")
             return true
         }
 
         return false
     }
 
+    private fun isOverScreen(): Boolean {
+        if (basecamp.missile.x - GameConfig.MISSILE_SIZE > GameConfig.SCREEN_WIDTH) {
+            return true
+        }
+        return false
+    }
+
     private fun isHitEnemy(): Tank? {
         enemies.forEach {
-            if (it.x - GameConfig.TANK_SIZE <= basecamp.missile.x && basecamp.missile.x <= it.x + GameConfig.TANK_SIZE &&
-                it.y - GameConfig.TANK_SIZE <= basecamp.missile.y && basecamp.missile.y <= it.y + GameConfig.TANK_SIZE
+            // 미사일의 오른편이 탱크의 왼편과 만날 때
+            if (it.x - GameConfig.TANK_SIZE <= basecamp.missile.x + GameConfig.MISSILE_SIZE && basecamp.missile.x + GameConfig.MISSILE_SIZE <= it.x + GameConfig.TANK_SIZE){
+                // 미사일 가장 오른 x 좌표가 탱크 너비 안에 들어올 때
+
+                if (it.y - GameConfig.TANK_SIZE <= basecamp.missile.y+GameConfig.MISSILE_SIZE && basecamp.missile.y+GameConfig.MISSILE_SIZE <= it.y+GameConfig.TANK_SIZE) {
+                    // 미사일이 위에서 아래로 떨어지며 미사일의 제일 아래부분이 탱크와 겹침
+                    return it
+                }
+
+                if (it.y - GameConfig.TANK_SIZE <= basecamp.missile.y-GameConfig.MISSILE_SIZE && basecamp.missile.y-GameConfig.MISSILE_SIZE <= it.y+GameConfig.TANK_SIZE) {
+                    // 미사일이 아래에서 위로 날아가며 미사일의 제일 윗 부분이 탱크와 겹침
+                    return it
+                }
+
+            }
+            // 미사일이 높게 떴다가 내려가며 미사일의 왼편이 탱크와 만날 때
+            else if (
+                it.x - GameConfig.TANK_SIZE <= basecamp.missile.x - GameConfig.MISSILE_SIZE && basecamp.missile.x - GameConfig.MISSILE_SIZE <= it.x + GameConfig.TANK_SIZE
             ) {
-                Log.e("hit enemy", "hit")
-                return it
+                // 이 경우는 미사일이 위에서 아래로 떨어지는 경우 뿐
+                if (it.y - GameConfig.TANK_SIZE <= basecamp.missile.y+GameConfig.MISSILE_SIZE && basecamp.missile.y+GameConfig.MISSILE_SIZE <= it.y+GameConfig.TANK_SIZE) {
+                    // 미사일이 위에서 아래로 떨어지며 미사일의 제일 아래부분이 탱크와 겹침
+                    return it
+                }
             }
         }
 
