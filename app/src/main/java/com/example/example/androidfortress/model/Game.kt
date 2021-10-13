@@ -19,23 +19,23 @@ class Game {
         gameState = GAME_STATE.READY
 
         // 지형 초기화
-        landForm = LandForm(GameConfig.SCREEN_HEIGHT)
+        landForm = LandForm()
         landForm.setLand()
 
         // 나의 tank - basecamp 초기화
         basecamp = Basecamp()
-        basecamp.setTank(landForm.vertex)
+        basecamp.setTank(landForm)
 
 
         // 적의 탱크 초기화
         val tank1 = Tank()
-        tank1.setTank(landForm.vertex)
+        tank1.setTank(landForm)
 
         val tank2 = Tank()
-        tank2.setTank(landForm.vertex)
+        tank2.setTank(landForm)
 
         val tank3 = Tank()
-        tank3.setTank(landForm.vertex)
+        tank3.setTank(landForm)
 
         enemies = arrayListOf(tank1, tank2, tank3)
 
@@ -57,16 +57,17 @@ class Game {
         basecamp.missile.move()
 
         // Check
-//        if (isHitMountain()) {
-//
-//        }
+        if (isHitMountain()) {
+            failed()
+        }
 
         if (isHitEnemy() != null) {
             val hitEnemy = isHitEnemy()
             hitEnemy!!.color = Color.BLACK
-            return
+
             // not failed - 이후에 계속 떨어지며 더 맞출 수도 있다.
             // 계속 진행되게 return 해준다.
+            return
         }
 
         if (isDrop()) {
@@ -76,6 +77,29 @@ class Game {
     }
 
     private fun isHitMountain(): Boolean {
+        Log.e(
+            "fire",
+            "${basecamp.missile.x} ${basecamp.missile.y} ${landForm.isOnLandForm(basecamp.missile.x.toFloat())}"
+        )
+
+        if (basecamp.missile.y - GameConfig.MISSILE_SIZE > basecamp.y - GameConfig.TANK_SIZE &&
+            basecamp.missile.y + GameConfig.MISSILE_SIZE < basecamp.y + GameConfig.TANK_SIZE
+        ) {
+            Log.e("in tank", "in")
+            return false
+        }
+
+        // 두 점을 지나는 직선의 방정식
+        if (basecamp.missile.y.toInt() - GameConfig.MISSILE_SIZE <= landForm.isOnLandForm(basecamp.missile.x.toFloat()).toInt() &&
+            landForm.isOnLandForm(basecamp.missile.x.toFloat()).toInt() <= basecamp.missile.y.toInt() + GameConfig.MISSILE_SIZE
+        ) {
+            Log.e(
+                "hit Mountain",
+                "${basecamp.missile.x} ${basecamp.missile.y} ${landForm.isOnLandForm(basecamp.missile.x.toFloat())}"
+            )
+            return true
+        }
+
         return false
     }
 
@@ -84,6 +108,7 @@ class Game {
             if (it.x - GameConfig.TANK_SIZE <= basecamp.missile.x && basecamp.missile.x <= it.x + GameConfig.TANK_SIZE &&
                 it.y - GameConfig.TANK_SIZE <= basecamp.missile.y && basecamp.missile.y <= it.y + GameConfig.TANK_SIZE
             ) {
+                Log.e("hit enemy", "hit")
                 return it
             }
         }

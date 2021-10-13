@@ -7,6 +7,7 @@ object GameConfig {
 
     const val MISSILE_NUMBER = 5
 
-    const val TANK_SIZE = 20
+    const val TANK_SIZE = 40
+    const val MISSILE_SIZE = 20
 
 }

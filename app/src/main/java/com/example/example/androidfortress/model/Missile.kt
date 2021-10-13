@@ -45,6 +45,9 @@ class Missile {
         // 원의 중심이 (a, b)이고 반지름이 r인 원의 방정식은 (x - a)2 + (y - b)2 = r2
         // 처음 미사일 방향 보여줄 때,
         // tank의 중심좌표 x, y 필요 -> lineTo() ->
+        val dx = 0f
+        val dy = 0f
+        (dx-x)*(dx-x) + (dy-y)*(dy-y) = 2*2
     }
 
 }

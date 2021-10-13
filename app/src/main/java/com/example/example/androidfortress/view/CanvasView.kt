@@ -45,15 +45,18 @@ class CanvasView(context: Context) : View(context) {
             paint.style = Paint.Style.STROKE
             paint.pathEffect = CornerPathEffect(100f)
 
+            val noCurvePaint = Paint()
+            noCurvePaint.strokeWidth = 5f
+            noCurvePaint.color = Color.LTGRAY
+            noCurvePaint.style = Paint.Style.STROKE
+
             landformPath.reset()
-            for (i in 0 until vertex!!.size - 1) {
+            for (i in 0 until vertex!!.size) {
                 landformPath.lineTo(vertex!![i][0], vertex!![i][1])
             }
             canvas.drawPath(landformPath, paint)
+            canvas.drawPath(landformPath, noCurvePaint)
         }
-
-
-
 
         if (this.basecamp != null) {
             val paint = Paint()
@@ -70,19 +73,15 @@ class CanvasView(context: Context) : View(context) {
             enemies!!.forEach {
                 paint.color = it.color
                 canvas.drawRect((it.x- GameConfig.TANK_SIZE), (it.y-GameConfig.TANK_SIZE), (it.x+GameConfig.TANK_SIZE), (it.y+GameConfig.TANK_SIZE), paint)
-//                canvas.drawOval((it!!.x-5).toFloat(), (it!!.y).toFloat(),
-//                    (it!!.x+5).toFloat(), (it!!.y).toFloat(), paint)
-//                tankPath.moveTo(it.x1.toFloat(), it.y1.toFloat() )
-//                tankPath.lineTo(it.x.toFloat(), it.y.toFloat())
-//                canvas.drawPath(tankPath, paint)
             }
 
         }
 
         if (this.missile != null) {
             val paint = Paint()
+//            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.ADD)
             paint.color = Color.BLACK
-            canvas.drawOval(((missile!!.x-10).toFloat()), (missile!!.y.toFloat()), ((missile!!.x+10).toFloat()), ((missile!!.y+20).toFloat()), paint)
+            canvas.drawOval(((missile!!.x-GameConfig.MISSILE_SIZE).toFloat()), (missile!!.y.toFloat()-GameConfig.MISSILE_SIZE), ((missile!!.x+GameConfig.MISSILE_SIZE).toFloat()), ((missile!!.y+GameConfig.MISSILE_SIZE).toFloat()), paint)
         }
     }
 }
