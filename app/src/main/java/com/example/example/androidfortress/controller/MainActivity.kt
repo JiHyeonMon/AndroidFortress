@@ -110,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         handler = Handler()
         runnable = Runnable {
 
+            // TODO 게임 상태 체크 개념 이상하다.
             // View에서 발사를 누르면 progress가 진행된다.
             // 미사일 발사하기 전, 발사 가능한지 확인
             if (game.gameState == Game.GAME_STATE.FINISHED) {
@@ -170,8 +171,9 @@ class MainActivity : AppCompatActivity() {
         binding.textGameover.isVisible = true
     }
 
+
     /**
-     * Draw와 관련된 함수들
+     * 아래로 쭉 Draw와 관련된 함수들
      * Model에서 값 가져와 화면에 그려줌
      */
     // 산(지형)을 Canvas에 그린다.

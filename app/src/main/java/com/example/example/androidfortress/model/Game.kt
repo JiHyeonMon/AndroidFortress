@@ -32,6 +32,7 @@ class Game {
      */
     // 게임에 필요한 변수 및 게임 객체들 초기화
     fun init() {
+        // TODO 게임 상태 선언 - 매번? - 개념이 이상하다.
         // 게임 상태를 발사 가능한 상태인 READY로 설정
         gameState = GAME_STATE.READY
 
@@ -76,13 +77,13 @@ class Game {
         // 체크 1 - 산에 맞았는가
         if (isHitMountain()) {
             // isTrue - 산에 맞았다면
-            failed()
+            missileConsumed()
         }
 
         // 체크 2 - 화면 가로 너비에서 벗어났는가
         if (isOverScreen()) {
             // isTrue - 화면 가로로 벗어났다면
-            failed()
+            missileConsumed()
         }
 
         // 체크 3 - 적을 맞췄는가
@@ -100,7 +101,7 @@ class Game {
         // 체크 4 - 땅에 떨어졌는가
         if (isDrop()) {
             // isTrue
-            failed()
+            missileConsumed()
         }
 
     }
@@ -167,6 +168,7 @@ class Game {
 
     // 미사일 체크 3 - 적을 맞췄는지 확인
     private fun isHitEnemy(): Tank? {
+        // TODO 계산 로직 더 심플하게
         // 적을 맞췄다면 어떤 적을 맞췄는지 Tank객체를 반환한다. (안맞췄다면 null 반환)
         // 적 enemies 리스트 반복문을 통해 돌며 하나하나 확인한다.
 
@@ -218,7 +220,7 @@ class Game {
 
     // 미사일 발포가 끝
     // 다음 발사를 준비한다.
-    private fun failed() {
+    private fun missileConsumed() {
         // 남은 미사일 수가 없다면
         if (missileNum == 0) {
             // 게임 상태를 FINISHED로 바꾸고 리턴하여 게임을 종료한다.

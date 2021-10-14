@@ -24,8 +24,9 @@ class Missile {
 
     // 미사일 발사! 미사일의 좌표가 포물선 궤도를 그리며 이동한다.
     fun move() {
+        // TODO 계산식 잘못됨
         // 해당 시간이 흐른 만큼의 거리 계산
-        t += GameConfig.SECOND_TIME
+        t += GameConfig.SECONDS_TIME
 
         // 해당 시간이 흐른 만큼 변화된 x, y 좌표를 구한다.  << 이동한 거리 = 속력 * 시간 >>
         // 방향이 비스듬하게 올려 쏘아지기 때문에

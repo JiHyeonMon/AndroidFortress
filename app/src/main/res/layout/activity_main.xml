@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:text="10"
+                android:text="20"
                 app:layout_constraintBottom_toBottomOf="@id/textview3"
                 app:layout_constraintStart_toEndOf="@id/textview3"
                 app:layout_constraintTop_toTopOf="@id/textview3" />

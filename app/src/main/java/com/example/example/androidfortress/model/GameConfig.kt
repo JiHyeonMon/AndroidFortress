@@ -21,10 +21,10 @@ object GameConfig {
     const val MISSILE_GUIDE_RADIUS = 100
 
     // 미사일 위치 계산에 필요한 시간 - seconds
-    const val SECOND_TIME = 0.1
+    const val SECONDS_TIME = 0.05
 
     // MainActivity에서 미사일 움직임 반영할 Timer로 미사일 위치 계산에 사용된 시간과 같은 값 필요 - 단위 milliseconds
-    const val MILLIS_TIME = SECOND_TIME * 1000
+    const val MILLIS_TIME = SECONDS_TIME * 1000
 
     // 미사일 위치 계산에 필요한 중력 크기
     const val G = 9.8
