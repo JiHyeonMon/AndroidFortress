@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.example.androidfortress.databinding.ActivityMainBinding
 import com.example.example.androidfortress.model.Game
+import com.example.example.androidfortress.model.GameConfig
 import com.example.example.androidfortress.view.CanvasView
 
 
@@ -97,13 +98,12 @@ class MainActivity : AppCompatActivity() {
             // 게임 모델에서 데이터 변경
             // gameState = FIRE 가 된다.
             // 미사일 날아간다.
-            game.progress()
+            game.missileProgress()
 
             // ViewUpdate
             updateUI()
 
             // check
-            // 미사일이 적에게 닿았는지
             if (game.gameState != Game.GAME_STATE.FIRE) {
                 Toast.makeText(this, "한 발 끝 ", Toast.LENGTH_SHORT).show()
                 updateUI()
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             // 1초마다 check
-            handler.postDelayed(runnable, 50)
+            handler.postDelayed(runnable, GameConfig.MILLIS_TIME.toLong())
         }
         handler.post(runnable)
     }
