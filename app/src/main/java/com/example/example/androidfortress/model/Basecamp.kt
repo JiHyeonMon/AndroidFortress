@@ -36,9 +36,11 @@ class Basecamp : Tank() {
 
         // 미사일의 초기 위치를 베이스 캠프의 중심점으로 설정
         // 미사일의 처음 속도, 각도 지정
+        missile.x0 = this.x.toDouble()
+        missile.y0 = this.y.toDouble()
         missile.x = this.x.toDouble()
         missile.y = this.y.toDouble()
-        missile.V = 20
+        missile.V = 80
         missile.angle = 45.0
     }
 
