@@ -7,7 +7,7 @@ import kotlin.math.sqrt
 class Game {
 
     // 게임상태를 나타내는 상수
-    enum class GAME_STATE { READY, FIRE, HIT, FINISHED }
+    enum class GAME_STATE { READY, FIRE, FINISHED }
 
     // 현재 게임의 상태를 나타낼 state 변수
     lateinit var gameState: GAME_STATE
@@ -17,9 +17,12 @@ class Game {
     var missileNum = GameConfig.MISSILE_NUMBER
 
     // < 게임 객체 선언 >
+    // 산(지형) 선언
     lateinit var mountain: Mountain
-    // 나의 탱크 - Basecamp
+
+    // 나의 탱크 - Basecamp 선언
     lateinit var basecamp: Basecamp
+
     // 적의 탱크는 한 대가 아니라 여러 대라 enemies라는 이름의 리스트로 만들어 넣는다.
     var enemies: ArrayList<Tank> = arrayListOf()
 
@@ -106,14 +109,17 @@ class Game {
      * Private Method
      */
     // 미사일 체크 1 - 산(지형)에 닿았는가
-    // x좌표를 받으면 해당 x좌표에 해당하는 y 좌표를 리턴한다.
     private fun isHitMountain(): Boolean {
+        // 원형의 미사일과 직선이 닿였는가에 대한 판단은 직선과 한 점의 거리로 판단한다.
+        // 한 점 (미사일의 중심) 과 산(직선)사이의 거리 d 가 미사일의 반지름보다 작다면 닿였다고 판단한다.
 
+        // 직선의 방정식을 구하기 위한 두 점의 좌표
         var x1 = 0f
         var x2 = 0f
         var y1 = 0f
         var y2 = 0f
 
+        // 우측으로 발사 - 3번째 선분부터 검사한다.
         for (i in 3 until mountain.vertex.size) {
             if (mountain.vertex[i][0] > basecamp.missile.x) {
                 x1 = mountain.vertex[i - 1][0]
@@ -131,7 +137,7 @@ class Game {
         // (y - y1) = { (y2 - y1) / (x2 - x1) * x } - { (y2 - y1) / (x2 - x1) * x1 }
 
         // (y2 - y1) / (x2 - x1)* x - y - (y2 - y1) / (x2 - x1) * x1 + y1 = 0
-        // ax + by + c = 0 형태로 바꾸자면
+        //  일반식 ax + by + c = 0 형태로 바꾸자면
         // a = (y2 - y1) / (x2 - x1)
         // b = -1
         // c = - (y2 - y1) / (x2 - x1) * x1 + y1
@@ -140,8 +146,10 @@ class Game {
         val b = -1
         val c = -(y2 - y1) / (x2 - x1) * x1 + y1
 
+        //한 점 (미사일의 중심) 과 산(직선)사이의 거리 d
         val d = abs(a * basecamp.missile.x + b * basecamp.missile.y + c) / sqrt(a * a + b * b)
 
+        //d 가 미사일의 반지름보다 작다면 닿였다고 판단한다.
         if (d < GameConfig.MISSILE_SIZE) {
             return true
         }
@@ -195,6 +203,7 @@ class Game {
             }
         }
 
+        // 아무 탱크와도 만나지 않으면 null 반환
         return null
     }
 
@@ -211,7 +220,7 @@ class Game {
     // 다음 발사를 준비한다.
     private fun failed() {
         // 남은 미사일 수가 없다면
-        if (missileNum < 0) {
+        if (missileNum == 0) {
             // 게임 상태를 FINISHED로 바꾸고 리턴하여 게임을 종료한다.
             gameState = GAME_STATE.FINISHED
             return

@@ -13,10 +13,6 @@ class Mountain {
     var vertex: MutableList<ArrayList<Float>> = mutableListOf(arrayListOf(0f, height / 2))
 
 
-    /**
-     * Public Method
-     */
-
     // 산(지형) 초기화
     // 산을 그릴 꼭지점 랜덤하게 생성
     fun initMountain() {
