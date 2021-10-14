@@ -18,6 +18,6 @@ open class Tank {
     // 탱크 위치 초기화
     open fun initTank(mountain: Mountain) {
         // 랜덤한 위치를 갖는 탱크의 x 좌표에 맞는 y 값을 구해서 완전한 위치를 설정한다.
-        y = mountain.getVertexY(x)
+        y = mountain.getMountainY(x)
     }
 }

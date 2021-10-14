@@ -26,7 +26,7 @@ class Basecamp : Tank() {
         x = ((mountain.vertex[1][0].toInt()..mountain.vertex[2][0].toInt())).random().toFloat()
 
         // 해당 x 값에 대한 y 값을 구해서 완전한 위치 설정
-        y = mountain.getVertexY(x)
+        y = mountain.getMountainY(x)
     }
 
     // 미사일을 초기화한다.
