@@ -6,10 +6,11 @@ import kotlin.properties.Delegates
 
 class Missile {
 
+    // 초기 미사일 위치 x, y 좌표
     var x0 by Delegates.notNull<Double>()
     var y0 by Delegates.notNull<Double>()
 
-    // 미사일 위치의 x 좌표, y 좌표
+    // 변화하는 미사일 위치의 x 좌표, y 좌표
     var x by Delegates.notNull<Double>()
     var y by Delegates.notNull<Double>()
 
@@ -27,11 +28,8 @@ class Missile {
 
     // 미사일 발사! 미사일의 좌표가 포물선 궤도를 그리며 이동한다.
     fun move() {
-        // TODO 계산식 잘못됨
         // 해당 시간이 흐른 만큼의 거리 계산
         t += GameConfig.SECONDS_TIME
-
-        val dt = GameConfig.SECONDS_TIME
 
         // 해당 시간이 흐른 만큼 변화된 x, y 좌표를 구한다.  << 이동한 거리 = 속력 * 시간 >>
         // 방향이 비스듬하게 올려 쏘아지기 때문에
@@ -40,10 +38,6 @@ class Missile {
         x = x0 + V * cos(Math.toRadians(angle)) * t
         // y 방향의 경우, 중력이 작용하기 때문에, 온전히 위로 올라간 거리에서 중력으로 아래로 이동한 거리를 빼서 계산한다.
         y = y0 - (V * sin(Math.toRadians(angle)) * t - G * t * t)
-
-        // 변화된 위치만큼 이동시킨다.
-//        x += dx
-//        y -= dy
 
     }
 
